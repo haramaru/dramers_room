@@ -1,0 +1,27 @@
+<h1>情報編集</h1>
+
+<%= form_with model: @shop, url: admin_shop_path(@shop.id), method: :patch do |f| %>
+
+  <div class="field">
+    <%= f.label "店名" %><br />
+    <%= f.text_field :shop_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label "電話番号" %><br />
+    <%= f.text_field :telephone_number %>
+  </div>
+
+  <div class="field">
+    <%= f.label "住所" %><br />
+    <%= f.text_field :address %>
+  </div>
+
+  <div class="field">
+    <%= f.label "ジャンル" %><br />
+    <%= f.select :region_genre_id, options_from_collection_for_select(RegionGenre.all, :id, :region) %>
+  </div>
+
+  <%= f.submit '更新' %>
+
+<% end %>

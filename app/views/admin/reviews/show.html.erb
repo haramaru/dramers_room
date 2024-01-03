@@ -1,0 +1,18 @@
+<div>
+  <h1>レビュー詳細</h1>
+  <%= image_tag @review.shop.image, size: "300x300" %>
+  <h2><%= @review.shop.shop_name %></h2>
+  <p><%= @review.review %></p><br>
+  <p><%= @review.rate %>点</p>
+  <li class="btn btn-outline-primary">
+    <%= link_to "削除する", admin_review_path(@review.id), method: :delete %>
+  </li>
+</div>
+
+<div>
+  <p>コメント件数：<%= @review.comments.count %></p>
+  <% @review.comments.each do |comment| %>
+    <%= comment.user.name %>
+    <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
+  <% end %>
+</div>

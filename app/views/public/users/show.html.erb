@@ -1,0 +1,26 @@
+<h1>ユーザー詳細</h1>
+
+<h4>名前</h4>
+<p><%= @user.name %></p>
+
+<h4>メールアドレス</h4>
+<p><%= @user.email %></p>
+
+<% if @user.id == current_user.id %>
+  <%= link_to "編集", edit_user_path(current_user.id) %>
+  <%= link_to "退会", users_confirm_path %>
+<% else %>
+  <% if @user.followed_by?(current_user) %>
+    <p>
+      <%= link_to user_relationship_path(@user), method: :delete do %>
+        フォロー中
+      <% end %>
+    </p>
+  <% else %>
+    <p>
+      <%= link_to user_relationship_path(@user), method: :post do %>
+        フォローする
+      <% end %>
+    </p>
+  <% end %>
+<% end %>

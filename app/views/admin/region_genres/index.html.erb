@@ -1,0 +1,12 @@
+<h1>ジャンル一覧・追加</h1>
+<%= form_with model: @region, url: admin_region_genres_path, method: :post do |f| %>
+  <%= f.label "ジャンル名" %>
+  <%= f.text_field :region %>
+  <%= f.submit "新規登録" %>
+<% end %>
+
+<h4>ジャンル</h4>
+<% @regions.each do |region| %>
+  <%= region.region %>
+  <%= link_to "編集", edit_admin_region_genre_path(region.id) %><br>
+<% end %>

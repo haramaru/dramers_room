@@ -1,0 +1,32 @@
+<main class="mt-5 mb-auto">
+  <%= form_with model: @shop, url: admin_shops_path, method: :post do |f| %>
+    <div class="container">
+      <div class="row">
+        <div class="col-auto">
+          <h4 class="bg-secondary px-3">ラーメン屋新規登録</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <%= f.label "画像" %><br>
+          <%= f.label "店名" %><br>
+          <%= f.label "電話番号" %><br>
+          <%= f.label "住所" %><br>
+          <%= f.label "ジャンル" %>
+        </div>
+        <div class="col-md-8">
+          <%= f.file_field :image, accept: "image/*" %><br>
+          <%= f.text_field :shop_name %><br>
+          <%= f.text_field :telephone_number %><br>
+          <%= f.text_field :address %><br>
+          <%= f.select :region_genre_id, options_from_collection_for_select(RegionGenre.all, :id, :region) %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <%= f.submit "新規登録" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</main>

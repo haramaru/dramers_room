@@ -1,0 +1,2 @@
+module Admin::RegionGenresHelper
+end

@@ -1,0 +1,37 @@
+<main class="mt-5 mb-auto">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h1>ユーザー一覧</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 mx-auto">
+          <table border="1" width="80%" height="100">
+            <thead>
+              <th>ユーザーID</th>
+              <th>氏名</th>
+              <th>メールアドレス</th>
+              <th>ステータス</th>
+            </thead>
+            <tbody>
+              <% @users.each do |user| %>
+                <tr>
+                  <td><%= user.id %></td>
+                  <td><%= link_to user.name, admin_user_path(user.id) %></td>
+                  <td><%= user.email %></td>
+                  <td><% if user.is_active == true %>
+                        <%= "有効" %>
+                      <% else %>
+                        <%= "退会" %>
+                      <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <%= paginate @users %>
+        </div>
+      </div>
+    </div>
+  </main>

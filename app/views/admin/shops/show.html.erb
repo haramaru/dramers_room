@@ -1,0 +1,7 @@
+<%= image_tag @shop.image, size: "200x200" %>
+<h4><%= @shop.shop_name %></h4>
+<p><%= @shop.telephone_number %></p><br>
+<p><%= @shop.address %></p>
+<%= link_to "編集", edit_admin_shop_path(@shop.id) %>
+
+<h4>レビュー</h4>

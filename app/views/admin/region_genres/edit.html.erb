@@ -1,0 +1,7 @@
+<h1>ジャンル編集</h1>
+
+<%= form_with model: @region, url: admin_region_genre_path(@region.id), method: :patch do |f| %>
+  <%= f.label "ジャンル名" %>
+  <%= f.text_field :region %>
+  <%= f.submit '更新' %>
+<% end %>
