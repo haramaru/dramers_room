@@ -7,29 +7,40 @@
   <p><%= @review.rate %>点</p>
 </div>
 
-<div>
-  <p>コメント件数：<%= @review.comments.count %></p>
-  <% @review.comments.each do |comment| %>
-    <%= comment.user.name %>
-    <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
-    <% if comment.favorited_by?(current_user) %>
-    <p>
-      <%= link_to review_comment_comment_favorites_path(comment.review, comment), method: :delete do %>
-        ♥<%= comment.comment_favorites.count %> いいね
-      <% end %>
-    </p>
-    <% else %>
-    <p>
-      <%= link_to review_comment_comment_favorites_path(comment.review, comment), method: :post do %>
-        ♡<%= comment.comment_favorites.count %> いいね
-      <% end %>
-    </p>
+<% if @review.user_id == current_user.id %>
+  <div>
+    <h1>おすすめユーザー</h1>
+    <% @same_rates.each do |same_rate| %>
+      <%= link_to same_rate.user.name, user_path(same_rate.user.id) %>
+      <%= same_rate.review %>
+      <%= same_rate.rate %><br>
     <% end %>
-  <% end %>
-</div>
-<div>
-  <%= form_with model: [@review, @comment] do |f| %>
-    <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
-    <%= f.submit "送信する" %>
-  <% end %>
-</div>
+  </div>
+<% else %>
+  <div>
+    <p>コメント件数：<%= @review.comments.count %></p>
+    <% @review.comments.each do |comment| %>
+      <%= comment.user.name %>
+      <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
+      <% if comment.favorited_by?(current_user) %>
+      <p>
+        <%= link_to review_comment_comment_favorites_path(comment.review, comment), method: :delete do %>
+          ♥<%= comment.comment_favorites.count %> いいね
+        <% end %>
+      </p>
+      <% else %>
+      <p>
+        <%= link_to review_comment_comment_favorites_path(comment.review, comment), method: :post do %>
+          ♡<%= comment.comment_favorites.count %> いいね
+        <% end %>
+      </p>
+      <% end %>
+    <% end %>
+  </div>
+  <div>
+    <%= form_with model: [@review, @comment] do |f| %>
+      <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+      <%= f.submit "送信する" %>
+    <% end %>
+  </div>
+<% end %>

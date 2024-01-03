@@ -13,6 +13,7 @@ class Public::ReviewsController < ApplicationController
 
   def show
     @review = Review.find(params[:id])
+    @same_rates = Review.where(rate: @review.rate).where(shop_id: @review.shop_id).where.not(user_id: current_user.id)
     @comment = Comment.new
   end
 

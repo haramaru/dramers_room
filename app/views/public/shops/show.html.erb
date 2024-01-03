@@ -21,11 +21,13 @@
     </p>
   <% end %>
 <% end %>
-<%= form_with model: @review, url: reviews_path, method: :post do |f| %>
-  <%= f.hidden_field :shop_id, :value => @shop.id %>
-  <%= f.label "レビュー" %><br>
-  <%= f.text_area :review %><br>
-  <%= f.label "評価" %><br>
-  <%= f.select :rate, [['残念',1], ['まあまあ',2], ['普通',3], ['おいしい',4], ['最高',5]] %>
-  <%= f.submit "レビューする", class: 'btn btn-success' %>
+<% unless @shop.reviews.exists?(user_id: current_user.id) %>
+  <%= form_with model: @review, url: reviews_path, method: :post do |f| %>
+    <%= f.hidden_field :shop_id, :value => @shop.id %>
+    <%= f.label "レビュー" %><br>
+    <%= f.text_area :review %><br>
+    <%= f.label "評価" %><br>
+    <%= f.select :rate, [['残念',1], ['まあまあ',2], ['普通',3], ['おいしい',4], ['最高',5]] %>
+    <%= f.submit "レビューする", class: 'btn btn-success' %>
+  <% end %>
 <% end %>
