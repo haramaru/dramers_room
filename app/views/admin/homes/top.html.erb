@@ -1,28 +1,4 @@
-<h1>ラーメンマン管理人</h1>
-<% if admin_signed_in? %>
-  <li>
-    <%= link_to "ログアウト", destroy_admin_session_path, method: :delete %>
-  </li>
-  <li>
-    <%= link_to "ラーメン屋登録", new_admin_shop_path %>
-  </li>
-  <li>
-    <%= link_to "ラーメン屋一覧", admin_shops_path %>
-  </li>
-  <li>
-    <%= link_to "ユーザー一覧", admin_users_path %>
-  </li>
-  <li>
-    <%= link_to "ジャンル一覧", admin_region_genres_path %>
-  </li>
-  <%= form_with url: admin_shops_path, method: :get do |f| %>
-    <%= f.text_field :shop_name %>
-    <%= f.submit "検索", class: "btn btn-primary" %>
-  <% end %>
-  <% @regions.each do |region| %>
-    <%= link_to region.region, admin_shops_path(region_genre_id: region.id) %>
-  <% end %>
-<% end %>
+<%= render 'admin/header' %>
 
 <h1>ユーザーレビュー一覧</h1>
 <% @reviews.each do |review| %>
@@ -30,3 +6,5 @@
   <p><%= review.created_at.strftime('%Y/%m/%d') %></p>
   <p><%= link_to review.review, admin_review_path(review.id) %></p>
 <% end %>
+
+<%= render 'admin/footer' %>
