@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     resources :shops, only: [:new, :create, :show, :edit, :update, :index]
     resources :users, only: [:index, :show, :edit, :update]
     resources :reviews, only: [:show, :destroy]
+    resources :comments, only: [:show, :destroy]
     resources :region_genres, only: [:create, :index, :edit, :update]
   end
 

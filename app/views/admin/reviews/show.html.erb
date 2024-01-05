@@ -2,8 +2,9 @@
   <h1>レビュー詳細</h1>
   <%= image_tag @review.shop.image, size: "300x300" %>
   <h2><%= @review.shop.shop_name %></h2>
+  <p><%= @review.user.name %></p><br>
   <p><%= @review.review %></p><br>
-  <p><%= @review.rate %>点</p>
+  <p><%= @review.rate %>点</p><br>
   <li class="btn btn-outline-primary">
     <%= link_to "削除する", admin_review_path(@review.id), method: :delete %>
   </li>

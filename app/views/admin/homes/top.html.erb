@@ -1,10 +1,60 @@
 <%= render 'admin/header' %>
 
-<h1>ユーザーレビュー一覧</h1>
-<% @reviews.each do |review| %>
-  <h5><%= review.user.name %></h5>
-  <p><%= review.created_at.strftime('%Y/%m/%d') %></p>
-  <p><%= link_to review.review, admin_review_path(review.id) %></p>
-<% end %>
+<main class="mt-5 mb-auto">
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <h4>レビュー一覧</h4>
+        <table border="1" width="90%" height="100">
+          <thead>
+            <th>ユーザー名</th>
+            <th>投稿日時</th>
+            <th>レビュー</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <% @reviews.each do |review| %>
+              <tr>
+                <td><p><%= review.user.name %></p></td>
+                <td><p><%= review.created_at.strftime('%Y/%m/%d') %></p></td>
+                <td><p><%= review.review %></p></td>
+                <td>
+                  <li class="btn btn-outline-primary">
+                    <%= link_to "削除", admin_review_path(review.id), method: :delete %>
+                  </li>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-6">
+        <h4>コメント一覧</h4>
+        <table border="1" width="90%" height="100">
+          <thead>
+            <th>ユーザー名</th>
+            <th>投稿日時</th>
+            <th>コメント</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <% @comments.each do |comment| %>
+              <tr>
+                <td><p><%= comment.user.name %></p></td>
+                <td><p><%= comment.created_at.strftime('%Y/%m/%d') %></p></td>
+                <td><p><%= comment.comment %></p></td>
+                <td>
+                  <li class="btn btn-outline-primary">
+                    <%= link_to "削除", admin_comment_path(comment.id), method: :delete %>
+                  </li>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
 
 <%= render 'admin/footer' %>
