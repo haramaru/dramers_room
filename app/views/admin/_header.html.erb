@@ -4,13 +4,13 @@
       <div class="container">
         <div class="row">
           <div class="col-auto">
-            <h6 class="navbar-brand p-3">管理者</h6>
+            <a class="navbar-brand p-3" href="/admin/homes/top">管理者</a>
           </div>
           <div class="col-auto p-3">
             <ul class="navbar-nav ml-auto">
               <% if admin_signed_in? %>
                 <li class="nav-item, btn btn-outline-primary">
-                  <%= link_to "管理者ログアウト", destroy_admin_session_path, method: :delete %>
+                  <%= link_to "ログアウト", destroy_admin_session_path, method: :delete %>
                 </li>
                 <li class="nav-item, btn btn-outline-primary">
                   <%= link_to "ラーメン屋登録", new_admin_shop_path %>
@@ -22,7 +22,7 @@
                   <%= link_to "ユーザー一覧", admin_users_path %>
                 </li>
                 <li class="nav-item, btn btn-outline-primary">
-                  <%= link_to "ジャンル一覧", admin_region_genres_path %>
+                  <%= link_to "ジャンル一覧・追加", admin_region_genres_path %>
                 </li>
                <% else %>
                 <li class="nav-item, btn btn-outline-primary">

@@ -1,7 +1,16 @@
-<h1>ジャンル編集</h1>
+<%= render 'admin/header' %>
 
-<%= form_with model: @region, url: admin_region_genre_path(@region.id), method: :patch do |f| %>
-  <%= f.label "ジャンル名" %>
-  <%= f.text_field :region %>
-  <%= f.submit '更新' %>
-<% end %>
+<main class="mt-5 mb-auto">
+  <div class="container">
+    <div class="row mb-5">
+      <h1>ジャンル編集</h1>
+    </div>
+    <div class="row">
+      <%= form_with model: @region, url: admin_region_genre_path(@region.id), method: :patch do |f| %>
+        <%= f.label "ジャンル名" %>
+        <%= f.text_field :region %>
+        <%= f.submit '更新' %>
+      <% end %>
+    </div>
+  </div>
+</main>

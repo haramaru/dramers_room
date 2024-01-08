@@ -24,12 +24,13 @@ class Admin::ShopsController < ApplicationController
   end
 
   def index
+    @regions = RegionGenre.all
     if params[:shop_name]
-      @shops = Shop.where('shop_name LIKE ?', "%#{params[:shop_name]}%")
+      @shops = Shop.where('shop_name LIKE ?', "%#{params[:shop_name]}%").order(region_genre_id: "ASC")
     elsif params[:region_genre_id]
-      @shops = Shop.where(region_genre_id: params[:region_genre_id])
+      @shops = Shop.where(region_genre_id: params[:region_genre_id]).order(region_genre_id: "ASC")
     else
-      @shops = Shop.all
+      @shops = Shop.all.order(region_genre_id: "ASC")
     end
   end
 
