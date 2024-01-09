@@ -1,1 +1,18 @@
-<h1>ランキング</h1>
+<%= render 'public/header' %>
+
+<main class="mt-5 mb-auto">
+  <div class="container">
+    <h2>ラーメン屋一覧</h2>
+    <div class="row d-flex flex-wrap">
+      <% @shops.each do |shop| %>
+        <div class="col-md-2 my-3">
+          <%= image_tag shop.image, size: "100x100" %><br>
+          <%= link_to shop.shop_name, shop_path(shop.id) %><br>
+          <%= shop.region_genre.region %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</main>
+
+<%= render 'public/footer' %>

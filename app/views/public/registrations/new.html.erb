@@ -1,34 +1,32 @@
-<h2>Sign up</h2>
+<%= render 'public/header' %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "public/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "public/shared/links" %>
+<main class="mt-5 mb-auto">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <div class="container">
+      <div class="row">
+        <div class="col-auto">
+          <h2 class="bg-primary px-3">新規会員登録</h2>
+          <%= render "public/shared/error_messages", resource: resource %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <%= f.label "名前" %><br />
+          <%= f.label "メールアドレス" %><br />
+          <%= f.label "パスワード" %>
+          <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> 文字以上)</em>
+          <% end %><br />
+          <%= f.label "パスワード（確認用）" %><br />
+        </div>
+        <div class="col-md-8">
+          <%= f.text_field :name %><br>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email" %><br>
+          <%= f.password_field :password, autocomplete: "new-password" %><br>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password" %><br>
+          <%= f.submit "登録" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</main>

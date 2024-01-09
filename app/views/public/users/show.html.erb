@@ -1,26 +1,45 @@
-<h1>ユーザー詳細</h1>
+<%= render 'public/header' %>
 
-<h4>名前</h4>
-<p><%= @user.name %></p>
-
-<h4>メールアドレス</h4>
-<p><%= @user.email %></p>
-
-<% if @user.id == current_user.id %>
-  <%= link_to "編集", edit_user_path(current_user.id) %>
-  <%= link_to "退会", users_confirm_path %>
-<% else %>
-  <% if @user.followed_by?(current_user) %>
-    <p>
-      <%= link_to user_relationship_path(@user), method: :delete do %>
-        フォロー中
+<main class="mt-5 mb-auto">
+  <div class="container">
+    <h1>ユーザー詳細</h1>
+    <div class="row mt-5">
+      <div class="col-md-4">
+        <h5>名前</h5><br>
+        <h5>メールアドレス</h5><br>
+      </div>
+      <div class="col-md-8">
+        <h5><%= @user.name %></h5><br>
+        <h5><%= @user.email %></h5>
+      </div>
+    </div>
+    <div class="row">
+      <% if @user.id == current_user.id %>
+        <li class="btn btn-outline-primary m-5">
+          <%= link_to "編集", edit_user_path(current_user.id) %>
+        </li>
+        <li class="btn btn-outline-primary m-5">
+          <%= link_to "退会", users_confirm_path %>
+        </li>
+      <% else %>
+        <% if @user.followed_by?(current_user) %>
+          <li class="btn btn-outline-primary m-5">
+            <%= link_to user_relationship_path(@user), method: :delete do %>
+              フォロー中
+            <% end %>
+          </li>
+        <% else %>
+          <li class="btn btn-outline-primary m-5">
+            <%= link_to user_relationship_path(@user), method: :post do %>
+              フォローする
+            <% end %>
+          </li>
+        <% end %>
       <% end %>
-    </p>
-  <% else %>
-    <p>
-      <%= link_to user_relationship_path(@user), method: :post do %>
-        フォローする
-      <% end %>
-    </p>
-  <% end %>
-<% end %>
+    </div>
+  </div>
+</main>
+
+
+
+

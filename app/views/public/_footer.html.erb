@@ -1,0 +1,15 @@
+  <footer class="shadow">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <h4 class="navbar-brand p-3">ジャンル検索</h4>
+        <ul class="navbar-nav ml-auto">
+          <% @regions.each do |region| %>
+            <li class="btn btn-outline-primary">
+              <%= link_to region.region, shops_path(region_genre_id: region.id) %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+  </footer>
+</body>
