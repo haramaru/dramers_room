@@ -1,5 +1,7 @@
 class Public::ReviewsController < ApplicationController
 
+  before_action :authenticate_user!
+
   def new
   end
 
@@ -12,6 +14,7 @@ class Public::ReviewsController < ApplicationController
 
 
   def show
+    @regions = RegionGenre.all
     @review = Review.find(params[:id])
     @same_rates = Review.where(rate: @review.rate).where(shop_id: @review.shop_id).where.not(user_id: current_user.id)
     @comment = Comment.new

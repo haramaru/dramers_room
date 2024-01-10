@@ -1,46 +1,61 @@
-<div>
-  <h1>レビュー詳細</h1>
-  <%= image_tag @review.shop.image, size: "300x300" %>
-  <h2><%= @review.shop.shop_name %></h2>
-  <p><%= link_to @review.user.name, user_path(@review.user.id) %></p>
-  <p><%= @review.review %></p><br>
-  <p><%= @review.rate %>点</p>
-</div>
+<%= render 'public/header' %>
 
-<% if @review.user_id == current_user.id %>
-  <div>
-    <h1>おすすめユーザー</h1>
-    <% @same_rates.each do |same_rate| %>
-      <%= link_to same_rate.user.name, user_path(same_rate.user.id) %>
-      <%= same_rate.review %>
-      <%= same_rate.rate %><br>
-    <% end %>
-  </div>
-<% else %>
-  <div>
-    <p>コメント件数：<%= @review.comments.count %></p>
-    <% @review.comments.each do |comment| %>
-      <%= comment.user.name %>
-      <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
-      <% if comment.favorited_by?(current_user) %>
-      <p>
-        <%= link_to review_comment_comment_favorites_path(comment.review, comment), method: :delete do %>
-          ♥<%= comment.comment_favorites.count %> いいね
+<main class="mt-5 mb-auto">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div>
+          <h1>レビュー詳細</h1>
+          <%= image_tag @review.shop.image, size: "300x300" %>
+          <h2><%= @review.shop.shop_name %></h2>
+          <p><%= link_to @review.user.name, user_path(@review.user.id) %></p>
+          <p><%= @review.review %></p><br>
+          <p><%= @review.rate %>点</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <% if @review.user_id == current_user.id %>
+          <div>
+            <h1>おすすめユーザー</h1>
+            <% @same_rates.each do |same_rate| %>
+              <%= link_to same_rate.user.name, user_path(same_rate.user.id) %>
+              <%= same_rate.rate %>点
+              <%= same_rate.review %><br>
+            <% end %>
+          </div>
+        <% else %>
+          <div>
+            <p>コメント件数：<%= @review.comments.count %></p>
+            <% @review.comments.each do |comment| %>
+              <div class="border pl-2 mb-2 rounded">
+                <%= comment.user.name %><br>
+                <%= comment.comment %>
+                <% if comment.favorited_by?(current_user) %>
+                  <p>
+                    <%= link_to review_comment_comment_favorites_path(comment.review, comment), method: :delete do %>
+                      ♥<%= comment.comment_favorites.count %> いいね
+                    <% end %>
+                  </p>
+                <% else %>
+                  <p>
+                    <%= link_to review_comment_comment_favorites_path(comment.review, comment), method: :post do %>
+                      ♡<%= comment.comment_favorites.count %> いいね
+                    <% end %>
+                  </p>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <div>
+            <%= form_with model: [@review, @comment] do |f| %>
+              <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+              <%= f.submit "送信する" %>
+            <% end %>
+          </div>
         <% end %>
-      </p>
-      <% else %>
-      <p>
-        <%= link_to review_comment_comment_favorites_path(comment.review, comment), method: :post do %>
-          ♡<%= comment.comment_favorites.count %> いいね
-        <% end %>
-      </p>
-      <% end %>
-    <% end %>
+      </div>
+    </div>
   </div>
-  <div>
-    <%= form_with model: [@review, @comment] do |f| %>
-      <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
-      <%= f.submit "送信する" %>
-    <% end %>
-  </div>
-<% end %>
+</main>
+
+<%= render 'public/footer' %>

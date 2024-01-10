@@ -3,52 +3,60 @@
 <main class="mt-5 mb-auto">
   <div class="container">
     <div class="row">
-      <div class="col-md-5">
+      <div class="col-md-6">
         <%= image_tag @shop.image, size: "300x300" %>
         <h2><%= @shop.shop_name %></h2>
-        <p><%= @shop.telephone_number %></p>
-        <p><%= @shop.address %></p>
+        <p>電話番号：<%= @shop.telephone_number %></p>
+        <p>住所　　：<%= @shop.address %></p>
+        <div class="w-50">
+          <% if user_signed_in? %>
+            <% unless @shop.reviews.exists?(user_id: current_user.id) %>
+              <div class="border border-success p-3 mb-2 rounded">
+                <%= form_with model: @review, url: reviews_path, method: :post do |f| %>
+                  <%= f.hidden_field :shop_id, :value => @shop.id %>
+                  <%= f.label "レビュー" %><br>
+                  <%= f.text_area :review %><br>
+                  <%= f.label "評価" %>
+                  <%= f.select :rate, [['残念',1], ['まあまあ',2], ['普通',3], ['おいしい',4], ['最高',5]] %><br>
+                  <%= f.submit "レビューする", class: 'btn btn-success' %>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
       </div>
-      <div class="col-md-7">
+      <div class="col-md-6">
         <h3>レビュー</h3>
         <% if user_signed_in? %>
           <% @shop.reviews.each do |review| %>
-
-            <%= link_to review.user.name, review_path(review.id) %><br>
-            <%= review.review %><br>
-            <%= review.rate %><br>
-            <% if review.favorited_by?(current_user) %>
-              <p>
-                <%= link_to review_review_favorites_path(review), method: :delete do %>
-                  ♥<%= review.review_favorites.count %> いいね
-                <% end %>
-              </p>
-            <% else %>
-              <p>
-                <%= link_to review_review_favorites_path(review), method: :post do %>
-                  ♡<%= review.review_favorites.count %> いいね
-                <% end %>
-              </p>
-            <% end %>
-
-            <% unless @shop.reviews.exists?(user_id: current_user.id) %>
-              <%= form_with model: @review, url: reviews_path, method: :post do |f| %>
-                <%= f.hidden_field :shop_id, :value => @shop.id %>
-                <%= f.label "レビュー" %><br>
-                <%= f.text_area :review %><br>
-                <%= f.label "評価" %><br>
-                <%= f.select :rate, [['残念',1], ['まあまあ',2], ['普通',3], ['おいしい',4], ['最高',5]] %>
-                <%= f.submit "レビューする", class: 'btn btn-success' %>
-              <% end %>
-            <% end %>
-          <% end %>
-
-        <% else %>
-          <% @shop.reviews.each do |review| %>
-            <div class="border">
+            <div class="border border-primary p-3 mb-2 rounded">
               <%= link_to review.user.name, review_path(review.id) %><br>
               <%= review.review %><br>
               <%= review.rate %><br>
+              <% if review.favorited_by?(current_user) %>
+                <p>
+                  <%= link_to review_review_favorites_path(review), method: :delete do %>
+                    ♥<%= review.review_favorites.count %> いいね
+                  <% end %>
+                </p>
+              <% else %>
+                <p>
+                  <%= link_to review_review_favorites_path(review), method: :post do %>
+                    ♡<%= review.review_favorites.count %> いいね
+                  <% end %>
+                </p>
+              <% end %>
+            </div>
+          <% end %>
+
+
+
+        <% else %>
+          <% @shop.reviews.each do |review| %>
+            <div class="border p-3 mb-2">
+              <%= link_to review.user.name, review_path(review.id) %><br>
+              <%= review.review %><br>
+              <%= review.rate %>点<br>
             </div>
           <% end %>
           <li class="btn btn-outline-primary">
@@ -60,3 +68,4 @@
   </div>
 </main>
 
+<%= render 'public/footer' %>

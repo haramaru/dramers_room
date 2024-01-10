@@ -3,6 +3,7 @@ class Public::ShopsController < ApplicationController
   def show
     @shop = Shop.find(params[:id])
     @review = Review.new
+    @regions = RegionGenre.all
     #@all_score = Review.where(shop_id: params[:id])
     #@average = @all_score.average(:rate)
   end

@@ -6,6 +6,9 @@ class Public::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    
+    @reviews = Review.where(user_id: params[:id]).order(rate: "DESC")
+    @regions = RegionGenre.all
   end
 
   def edit
