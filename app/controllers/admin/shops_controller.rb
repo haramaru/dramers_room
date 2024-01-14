@@ -4,9 +4,12 @@ class Admin::ShopsController < ApplicationController
   end
 
   def create
-    shop = Shop.new(shop_params)
-    shop.save
-    redirect_to admin_shop_path(shop.id)
+    @shop = Shop.new(shop_params)
+    if @shop.save
+      redirect_to admin_shop_path(@shop.id)
+    else
+      render :new
+    end
   end
 
   def edit
